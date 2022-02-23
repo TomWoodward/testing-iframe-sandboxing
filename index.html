@@ -1,0 +1,50 @@
+
+<body>
+  <script>
+    const src = (window.location.search.match(/src=([^&]+)/) || [])[1];
+    const scriptTag = (window.location.search.match(/scriptTag=([^&]+)/) || [])[1];
+    const inlineScript = (window.location.search.match(/inlineScript=([^&]+)/) || [])[1];
+    const sandbox = (window.location.search.match(/sandbox=([^&]*)/) || [])[1];
+
+
+    document.cookie = "test_cookie=foobar";
+
+    const thisHost = window.location.protocol + '//' + window.location.host;
+    const iframe = document.createElement('iframe');
+
+    if (src) {
+      iframe.src = src;
+    }
+
+    if (scriptTag) {
+      iframe.srcdoc = `<meta http-equiv="Content-Security-Policy" content="default-src ${thisHost}; script-src ${scriptTag}"><script src="${scriptTag}"><\/script>`;
+    }
+
+    if (inlineScript) {
+      fetch(inlineScript).then(response => response.text())
+      .then(script => {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(script);
+
+        return crypto.subtle.digest('SHA-256', data)
+          .then(hashBuffer => {
+            const hash = btoa(String.fromCharCode.apply(null, new Uint8Array(hashBuffer)));
+            return [`sha256-${hash}`, script];
+          });
+      })
+      .then(([hash, script]) => {
+        iframe.srcdoc = `<meta http-equiv="Content-Security-Policy" content="default-src ${thisHost}; script-src '${hash}'"><script>${script}<\/script>`;
+      })
+    }
+
+    if (sandbox !== undefined) {
+      iframe.setAttribute('sandbox', decodeURIComponent(sandbox));
+    }
+
+    iframe.onload = () => {
+      iframe.contentWindow.postMessage("foo", "*");
+
+    }
+    document.body.appendChild(iframe);
+  </script>
+</body>
