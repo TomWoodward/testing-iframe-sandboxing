@@ -14,7 +14,7 @@ it would be better if using the postmessage api to communicate with the embed re
 
 ### findings
 
-postmessage works in all the examples. it seems like if you use some way to ensure a content security policy is also defined for your sandboxed (non-same-origin) iframe, you can pretty much rely on its isolation.
+postmessage works in all the examples (except the one where javascript was disabled). it seems like if you use some way to ensure a content security policy is also defined for your sandboxed (non-same-origin) iframe, you can pretty much rely on its isolation.
 
 bad things can be controlled with:
 - posting to unknown endpoints with javascript - content security policy
