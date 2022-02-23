@@ -32,7 +32,7 @@ because these iframes have no src, `allow-same-origin` will always allow modifyi
 
 #### if you want to avoid JS
 
-you need to control how the index document of your embed is being served, so you can ensure it has either csp headers or meta tags. the iframe needs to be sandboxed and the embed should be on a different origin, or not have the `allow-same-origin` sandbox (if its on a different origin you can add `allow-same-origin` and it will have access to whatever cookies are on the embedded origin.
+you need to control how the index document of your embed is being served, so you can ensure it has either csp headers or meta tags. the iframe needs to be sandboxed and the embed should be on a different origin, or not have the `allow-same-origin` sandbox (if its on a different origin you can add `allow-same-origin` and it will have access to whatever cookies are on the embedded origin. via the csp values you have petty good control over if you want only the script file available, or any resources on a certain host, or some path prefix.
 
 
 ### procedure
