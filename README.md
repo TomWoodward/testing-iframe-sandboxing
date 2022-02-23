@@ -38,7 +38,7 @@ you need to control how the index document of your embed is being served, so you
 ### procedure
 run these at the same time:
 ```
-serve -l 8080 http://localhost:8080
+serve -l 8080 
 ```
 ```
 serve -l 8081 -c ./serve.json
