@@ -12,6 +12,16 @@ bad things include:
 
 it would be better if using the postmessage api to communicate with the embed remained possible
 
+### findings
+
+postmessage works in all the examples. it seems like if you use some way to ensure a content security policy is also defined for your sandboxed (non-same-origin) iframe, you can pretty much rely on its isolation.
+
+bad things can be controlled with:
+- posting to unknown endpoints with javascript - content security policy
+- submitting sneaky data via GET request to unknown endpoints by adding `script`, `img` or other tags to the document with a target `src` attribute - content security policy
+- modify the parent window - sandbox without `allow-same-origin` or an iframe `src` on a different origin
+- accessing cookies from parent window's host - iframe sandbox
+
 ### procedure
 run these at the same time:
 ```
@@ -40,16 +50,6 @@ load the host file `http://localhost:8080/` and append query params to specify t
 - sandbox: sets the sandbox attribute of the iframe
 - scriptTag: generates an embed document with a script tag with the given source and injects this document into the embed with the srcdoc attribute. a meta tag is added with a content security poicy
 - inlineScript: fetches script content and generates a document with the script in line, then injets that into the embed. a meta tag is added with the hashed script contents allowing only it to be run inline.
-
-### findings
-
-postmessage works in all the examples. it seems like if you use some way to ensure a content security policy is also defined for your sandboxed (non-same-origin) iframe, you can pretty much rely on its isolation.
-
-bad things can be controlled with:
-- posting to unknown endpoints with javascript - content security policy
-- submitting sneaky data via GET request to unknown endpoints by adding `script`, `img` or other tags to the document with a target `src` attribute - content security policy
-- modify the parent window - sandbox without `allow-same-origin` or an iframe `src` on a different origin
-- accessing cookies from parent window's host - iframe sandbox
 
 ### test cases
 
