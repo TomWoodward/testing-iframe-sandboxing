@@ -26,19 +26,19 @@ bad things can be controlled with:
 
 #### if you're ok with writing some JS to manage your embeds
 
-you can do either of the `srcdoc` methods, the inline code one might be better if the code isn't available on the internet (user defined in the UI?) or if you want to disable all network resoruces. the script tag one might be better if the script is bigger.
+you can do either of the `srcdoc` methods, the inline code one might be better if the code isn't available on the internet (user defined in the UI?) or if you want to disable all network resources. the script tag one might be better if the script is bigger.
 
 because these iframes have no src, `allow-same-origin` will always allow modifying the parent document, this means they will never be able to access any cookies. (this may be considered a good or a bad thing...)
 
 #### if you want to avoid JS
 
-you need to control how the index document of your embed is being served, so you can ensure it has either csp headers or meta tags. the iframe needs to be sandboxed and the embed should be on a different origin, or not have the `allow-same-origin` sandbox (if its on a different origin you can add `allow-same-origin` and it will have access to whatever cookies are on the embedded origin. via the csp values you have petty good control over if you want only the script file available, or any resources on a certain host, or some path prefix.
+you need to control how the index document of your embed is being served, so you can ensure it has either csp headers or meta tags. the iframe needs to be sandboxed and the embed should be on a different origin, or not have the `allow-same-origin` sandbox (if its on a different origin you can add `allow-same-origin` and it will have access to whatever cookies are on the embedded origin). via the csp values you have petty good control over if you want only the script file available, or any resources on a certain host, or some path prefix.
 
 
 ### procedure
 run these at the same time:
 ```
-http://localhost:8080
+serve -l 8080 http://localhost:8080
 ```
 ```
 serve -l 8081 -c ./serve.json
