@@ -100,7 +100,7 @@ same origin, sandbox, no csp, same as before but adding `allow-same-origin` to t
 
 http://localhost:8080/?src=http://localhost:8081/parent-access-iframe.html?sandbox=allow-scripts allow-same-origin
 
-different origin, sandbox, no csp, same as before but not on the same host. interestingly `allow-same-origin` doesn't actually override the fact that the script is loading from a different origin. the access to the parent document is in fact blocked here. i'm not.... totally sure the `allow-same-origin` is really doing much of anything in this case.
+different origin, sandbox, no csp, same as before but not on the same host. interestingly `allow-same-origin` doesn't actually override the fact that the script is loading from a different origin. the access to the parent document is in fact blocked here. in this case the `allow-same-origin` property is just allowing the embed to run on its actual origin, letting it use its own cookies, but doesn't allow anything from the parent origin.
 
 
 http://localhost:8080/?src=http://localhost:8083/parent-access-iframe.html?sandbox=allow-scripts%20allow-same-origin
